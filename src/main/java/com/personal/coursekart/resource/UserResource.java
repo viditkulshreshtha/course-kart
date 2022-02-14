@@ -1,5 +1,6 @@
 package com.personal.coursekart.resource;
 
+import com.personal.coursekart.dto.UserDTO;
 import com.personal.coursekart.entity.User;
 import com.personal.coursekart.service.UserService;
 import lombok.AllArgsConstructor;
@@ -14,8 +15,8 @@ public class UserResource {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody User user) {
-        var savedUser = userService.saveUser(user.getName(), user.getEmail());
+    public ResponseEntity<User> save(@RequestBody UserDTO userDTO) {
+        var savedUser = userService.saveUser(userDTO);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
@@ -24,4 +25,11 @@ public class UserResource {
         var user = userService.getUserByEmail(email);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @PutMapping
+    public ResponseEntity<User> update(@RequestBody UserDTO userDTO) {
+        var updatedUser = userService.update(userDTO);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
 }
